@@ -48,10 +48,14 @@ public class EmpController {
 	 */
 	@RequestMapping(value = "{emp_id}",method = RequestMethod.GET)
 	@ResponseBody
-	public Emp getEmp(@PathVariable(value = "emp_id") Integer emp_id) {
+	public Map<String, Object> getEmp(@PathVariable(value = "emp_id") Integer emp_id) {
 		System.out.println(emp_id);
 		Emp emp = empService.queryEmpByID(emp_id);
-		return emp;
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("code", 200);
+		map.put("msg", "请求成功");
+		map.put("data", emp);
+		return map;
 	}
 	
 	/**

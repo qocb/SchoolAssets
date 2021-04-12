@@ -37,6 +37,10 @@ public class EmpService {
 	public void addEmp(Emp emp) {
 		empDao.addEmp(emp);
 	}
+
+	public void updateEmpByDep_id(Integer dep_id) {
+		empDao.updateEmpByDep_id(dep_id);
+	}
 	
 	
 }

@@ -60,4 +60,7 @@ public interface EmpDao {
 
 	@Insert("INSERT INTO `emp` (emp_id,emp_name,emp_age,emp_sex,dep_id,emp_address,emp_phone) VALUES (0,#{emp_name},#{emp_age},#{emp_sex},#{dep.dep_id},#{emp_address},#{emp_phone})")
 	public void addEmp(Emp emp);
+
+	@Update("UPDATE emp SET dep_id = 5 WHERE dep_id = #{dep_id}")
+	public void updateEmpByDep_id(Integer dep_id);
 }
