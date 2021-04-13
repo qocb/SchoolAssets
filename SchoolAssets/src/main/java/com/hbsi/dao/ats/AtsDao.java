@@ -127,6 +127,6 @@ public interface AtsDao {
 	public List<Ats> needrepairAll();
 
 	@Update("UPDATE ats SET atsstate_id = 1 WHERE ats_id = #{ats_id}")
-	public Object repairAtsByID(Integer ats_id);
+	public void repairAtsByID(Integer ats_id);
 	
 }

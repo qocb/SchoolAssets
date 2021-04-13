@@ -188,8 +188,8 @@ public class AtsController {
 	@ResponseBody
 	public Map<String, Object> repairAts(Atsrepair atsrepair){
 		
-		
-		atsService.repairAtsByID(atsrepair.getAts().getAts_id());
+		Integer ats_id = atsrepair.getAts().getAts_id();
+		atsService.repairAtsByID(ats_id);
 		atsrepairService.addrepair(atsrepair);
 		
 		

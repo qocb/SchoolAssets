@@ -1,5 +1,7 @@
 package com.hbsi.service.scrap;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,5 +15,9 @@ public class ScrapService {
 	
 	public void addScarp(Scrap scrap) {
 		scrapDao.addScarp(scrap);
+	}
+
+	public List<Scrap> queryAllScrap() {
+		return scrapDao.queryAllScrap();
 	} 
 }
