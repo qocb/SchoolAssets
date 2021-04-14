@@ -72,5 +72,16 @@
 			<mvc:mapping path="/**" />
 			<bean class="com.hbsi.interceptor.CROSInterceptor" />
 		</mvc:interceptor>
+		
+
 	</mvc:interceptors>
 	</beans>
+	
+	
+<!-- 
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/root/login"/>
+			<bean class="com.hbsi.interceptor.TokenInterceptor" />
+		</mvc:interceptor>
+ -->

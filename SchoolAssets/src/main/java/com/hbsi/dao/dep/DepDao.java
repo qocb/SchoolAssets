@@ -14,6 +14,7 @@ public interface DepDao {
 	@Select("select * from dep where dep_id = #{dep_id}")
 	public Dep queryDepById(Integer dep_id);
 
+	
 	@Select("SELECT * FROM dep")
 	public List<Dep> queryAllDep();
 

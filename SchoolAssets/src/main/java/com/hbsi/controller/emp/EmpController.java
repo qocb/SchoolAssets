@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
 import com.hbsi.pojo.Emp;
 import com.hbsi.service.emp.EmpService;
 
@@ -30,14 +31,15 @@ public class EmpController {
 	 * 查询全部员工
 	 * @return
 	 */
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/all/{page}/{size}", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> empAll() {
-		List<Emp> emps = empService.queryAllEmp();
+	public Map<String, Object> empAll(@PathVariable(value = "page") Integer page,@PathVariable(value = "size") Integer size) {
+		List<Emp> emps = empService.queryAllEmp(page,size);
+		PageInfo pageInfo = new PageInfo(emps);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", 200);
 		map.put("msg", "请求成功");
-		map.put("data", emps);
+		map.put("data", pageInfo);
 		return map;
 	}
 	

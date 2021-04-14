@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
 import com.hbsi.pojo.Ats;
 import com.hbsi.pojo.Atsrepair;
 import com.hbsi.pojo.Emp;
@@ -50,15 +51,16 @@ public class AtsController {
 	 * 查询全部
 	 * @return
 	 */
-	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	@RequestMapping(value = "/all/{page}/{size}", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryAllAts(){
+	public Map<String, Object> queryAllAts(@PathVariable(value = "page") Integer page,@PathVariable(value = "size") Integer size){
 		
-		List<Ats> atss = atsService.queryAllAts();
+		List<Ats> atss = atsService.queryAllAts(page,size);
+		PageInfo pageInfo =new PageInfo(atss);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", 200);
 		map.put("msg", "请求成功");
-		map.put("data", atss);
+		map.put("data", pageInfo);
 		return map;
 	}
 	
@@ -138,30 +140,32 @@ public class AtsController {
 	 * 查询所有正常资产
 	 * @return
 	 */
-	@RequestMapping(value ="/normal", method = RequestMethod.GET)
+	@RequestMapping(value ="/normal/{page}/{size}", method = RequestMethod.GET)
 	@ResponseBody
-	public  Map<String, Object> normalAtsAll(){
+	public  Map<String, Object> normalAtsAll(@PathVariable(value = "page") Integer page,@PathVariable(value = "size") Integer size){
 		
-		List<Ats> atss = atsService.normalAllats();
+		List<Ats> atss = atsService.normalAllats(page,size);
+		PageInfo pageInfo=new PageInfo(atss);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", 200);
 		map.put("msg", "请求成功");
-		map.put("data", atss);
+		map.put("data", pageInfo);
 		return map;
 	}
 	/**
 	 * 查询所有没有报废的资产
 	 * @return
 	 */
-	@RequestMapping(value ="/notscrap", method = RequestMethod.GET)
+	@RequestMapping(value ="/notscrap/{page}/{size}", method = RequestMethod.GET)
 	@ResponseBody
-	public  Map<String, Object> notscrap(){
+	public  Map<String, Object> notscrap(@PathVariable(value = "page") Integer page,@PathVariable(value = "size") Integer size){
 		
-		List<Ats> atss = atsService.notscrapAtsAll();
+		List<Ats> atss = atsService.notscrapAtsAll(page,size);
+		PageInfo pageInfo =new PageInfo(atss);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", 200);
 		map.put("msg", "请求成功");
-		map.put("data", atss);
+		map.put("data", pageInfo);
 		return map;
 	}
 	
@@ -169,15 +173,16 @@ public class AtsController {
 	 * 查询所有需要维修的资产
 	 * @return
 	 */
-	@RequestMapping(value ="/needrepair", method = RequestMethod.GET)
+	@RequestMapping(value ="/needrepair/{page}/{size}", method = RequestMethod.GET)
 	@ResponseBody
-	public  Map<String, Object> needrepair(){
+	public  Map<String, Object> needrepair(@PathVariable(value = "page") Integer page,@PathVariable(value = "size") Integer size){
 		
-		List<Ats> atss = atsService.needrepairAtsAll();
+		List<Ats> atss = atsService.needrepairAtsAll(page,size);
+		PageInfo pageInfo =new PageInfo(atss);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", 200);
 		map.put("msg", "请求成功");
-		map.put("data", atss);
+		map.put("data", pageInfo);
 		return map;
 	}
 	

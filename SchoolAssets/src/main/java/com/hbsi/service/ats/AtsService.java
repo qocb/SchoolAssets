@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.hbsi.dao.ats.AtsDao;
 import com.hbsi.pojo.Ats;
 
@@ -19,7 +20,6 @@ public class AtsService {
 	 * @return
 	 */
 	public Ats queryAtsById(Integer ats_id){
-		
 		return atsDao.queryAtsById(ats_id);
 	}
 	
@@ -53,10 +53,12 @@ public class AtsService {
 	 */
 	
 	/**
-	 * @desc  删除
+	 * @desc  查询全部
 	 * @param id
 	 */
-	public List<Ats> queryAllAts() {
+	public List<Ats> queryAllAts(Integer page,Integer size) {
+		 //参数pageNum 是页码值   参数pageSize 代表是每页显示条数
+		PageHelper.startPage(page, size);
 		return atsDao.queryAllAts();
 	}
 
@@ -72,15 +74,18 @@ public class AtsService {
 		atsDao.scrapAtsById(ats_id);
 	}
 
-	public List<Ats> normalAllats() {
+	public List<Ats> normalAllats(Integer page,Integer size) {
+		PageHelper.startPage(page,size);
 		return atsDao.normalAllats();
 	}
 
-	public List<Ats> notscrapAtsAll() {
+	public List<Ats> notscrapAtsAll(Integer page,Integer size) {
+		PageHelper.startPage(page,size);
 		return atsDao.notscrapAtsAll();
 	}
 
-	public List<Ats> needrepairAtsAll() {
+	public List<Ats> needrepairAtsAll(Integer page,Integer size) {
+		PageHelper.startPage(page,size);
 		return atsDao.needrepairAll();
 	}
 

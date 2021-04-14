@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.hbsi.dao.emp.EmpDao;
 import com.hbsi.pojo.Emp;
 
@@ -13,8 +14,14 @@ public class EmpService {
 
 	@Autowired
 	EmpDao empDao;
-
-	public List<Emp> queryAllEmp() {
+	/**
+	 * @desc  分页查询全部员工
+	 * @param page
+	 * @param size
+	 * @return
+	 */
+	public List<Emp> queryAllEmp(Integer page, Integer size) {
+		PageHelper.startPage(page, size);
 		return empDao.queryAllEmp();
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.hbsi.dao.atstype.AtstypeDao;
 import com.hbsi.pojo.Atstype;
 
@@ -18,7 +19,8 @@ public class AtstypeService {
 	 * @desc 查找全部
 	 * @return
 	 */
-	public List<Atstype> queryAtstypeAll(){
+	public List<Atstype> queryAtstypeAll(Integer page,Integer size){
+		PageHelper.startPage(page,size);
 		return atstypeDao.queryAtstypeAll();
 	}
 	

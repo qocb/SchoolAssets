@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
 import com.hbsi.pojo.Dep;
 import com.hbsi.service.dep.DepService;
 import com.hbsi.service.emp.EmpService;
@@ -26,17 +27,19 @@ public class DepController {
 	EmpService empService;
 	
 	/**
-	 * 获取全部部门
+	 * 获取全部部门(分页)
 	 * @return
 	 */
-	@RequestMapping(value = "/all",method = RequestMethod.GET)
+	@RequestMapping(value = "/all/{page}/{size}",method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryAllDep() {
-		List<Dep> deps = depService.queryAllDep();
+	public Map<String, Object> queryAllDep(@PathVariable(value = "page") Integer page,@PathVariable(value = "size") Integer size) {
+		
+		List<Dep> deps = depService.queryAllDep(page,size);
 		Map<String, Object> map = new HashMap<String, Object>();
+		PageInfo pageInfo =new PageInfo(deps);
 		map.put("code", 200);
 		map.put("msg", "请求成功");
-		map.put("data", deps);
+		map.put("data", pageInfo);
 		return map;
 	}
 	

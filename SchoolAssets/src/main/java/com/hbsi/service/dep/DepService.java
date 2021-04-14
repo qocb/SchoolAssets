@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
 import com.hbsi.dao.dep.DepDao;
 import com.hbsi.pojo.Dep;
 
@@ -13,8 +14,12 @@ public class DepService {
 
 	@Autowired
 	DepDao depDao;
-	
-	public List<Dep> queryAllDep() {
+	/**
+	 * @desc  部门分页查询
+	 * @return
+	 */
+	public List<Dep> queryAllDep(Integer page,Integer size) {
+		PageHelper.startPage(page,size);
 		return depDao.queryAllDep();
 	}
 
