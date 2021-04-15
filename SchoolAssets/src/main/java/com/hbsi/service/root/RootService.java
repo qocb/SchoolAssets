@@ -24,6 +24,16 @@ public class RootService {
 		rootDao.setTokenByUnameAndPWD(root_uname,root_pwd,token);
 	}
 
+
+	public void uploadImg(String imgname, Integer root_id) {
+		rootDao.updateIMG(imgname,root_id);
+	}
+
+
+	public Map<String, Object> queryRootByID(Integer root_id) {
+		return rootDao.queryRootByID(root_id);
+	}
+
 	
 	
 	

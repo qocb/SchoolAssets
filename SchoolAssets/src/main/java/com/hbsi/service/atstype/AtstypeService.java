@@ -38,7 +38,7 @@ public class AtstypeService {
 	 * @param id
 	 */
 	public void deleteAtstypeById(Integer id){
-		 
+		 atstypeDao.deleteAtstypeById(id);
 	}
 	
 	/**

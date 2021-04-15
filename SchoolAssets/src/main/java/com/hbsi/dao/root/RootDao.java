@@ -17,4 +17,10 @@ public interface RootDao {
 			
 	@Select("SELECT * FROM `root` WHERE token = #{token}")
 	Map<String, String> queryrootBtoken(String token);
+
+	@Update("UPDATE `root` SET root_img = #{0} WHERE root_id = #{1}")
+	void updateIMG(String imgname, Integer root_id);
+
+	@Select("SELECT * FROM `root` WHERE root_id = #{root_id}")
+	Map<String, Object> queryRootByID(Integer root_id);
 }
