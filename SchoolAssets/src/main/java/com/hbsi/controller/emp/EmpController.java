@@ -74,7 +74,7 @@ public class EmpController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("code", 200);
 		map.put("msg", "请求成功");
-		map.put("data", pageInfo);
+		map.put("data", pageInfo);	
 		return map;
 	}
 	
