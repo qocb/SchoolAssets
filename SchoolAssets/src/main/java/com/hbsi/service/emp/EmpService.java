@@ -29,7 +29,8 @@ public class EmpService {
 		return empDao.queryEmpByID(emp_id);
 	}
 
-	public List<Emp> queryEmpByName(String emp_name) {
+	public List<Emp> queryEmpByName(String emp_name, Integer page, Integer size) {
+		PageHelper.startPage(page, size);
 		return empDao.queryEmpByName(emp_name);
 	}
 

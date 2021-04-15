@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.hbsi.pojo.Ats;
+import com.hbsi.service.ats.AtsService;
 import com.hbsi.service.root.RootService;
 import com.hbsi.utils.Md5Utils;
 
@@ -40,6 +43,8 @@ public class RootController {
 
 	@Autowired
 	RootService rootService;
+	@Autowired
+	AtsService atsService;
 	/**
 	 * 管理员登录
 	 * @return
@@ -120,9 +125,8 @@ public class RootController {
 	}
 	
 	@RequestMapping(value = "/download.html", method = RequestMethod.GET)
-	public void download(HttpServletRequest request,HttpServletResponse response) {
+	public void download(HttpServletRequest request,HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
-		List<String> list = new ArrayList<String>();//Student是被导出数据的类型，一般是自己写的Model类
 
 		XSSFWorkbook excelbook = new XSSFWorkbook(); //创建workBook
 		XSSFSheet excelSheet = excelbook.createSheet();//创建sheet表
@@ -131,41 +135,45 @@ public class RootController {
 		//接下来是创建 列标题 ,cell的起始值是 0,可创建n个列标题  
 		XSSFCell cell = excelRow.createCell(0);
 		cell.setCellStyle(headerStyle);//居中
-		cell.setCellValue("列标题 ");
-
+		cell.setCellValue("固定资产详细报表");
 		//接下来遍历List,并写入EXCEL中
-//		for(int i = 0; i < list.size(); i++){
-//			//创建行,行号应从1开始,因为表头行(列标题)占据了第0行
-//			excelRow = excelSheet.createRow(i + 1); 
-//			Student t = list.get(i); // List 的起始值是0
-//			//将该行每一列的数据写入,可写n列
-//			cell = excelRow.createCell(0);
-//			cell.setCellValue(t.getName());
-//		}
 		
-		try {
-			String filePath = "EXCEL表格导出路径.xls";
-			writeExcel(response, excelbook, filePath, "文件名");//具体导出的方法
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String [] array = {"序号","资产名","资产花费","资产状态","采购人"};
+		XSSFRow excelRow2 = excelSheet.createRow(1);
+ 		for(int i = 0; i < array.length; i++){
+ 			XSSFCell cell2 = excelRow2.createCell(i);
+ 			cell2.setCellValue(array[i]);
+ 		}
+ 		
+		List<Ats> atss = atsService.queryAllAts(1, 99999);
+ 		
+		for (int i = 0; i < atss.size(); i++) {
+			XSSFRow excelRow3 = excelSheet.createRow(i+2);
+			for (int j = 0; j < array.length; j++) {
+			 	XSSFCell cell3 = excelRow3.createCell(j);
+			 	if (j==0) {
+					cell3.setCellValue((i+1)+i);
+				}
+			 	if (j==1) {
+			 		cell3.setCellValue(atss.get(i).getAts_money());
+				}
+			 	if (j==2) {
+			 		cell3.setCellValue(atss.get(i).getAts_money());
+				}
+			 	if (j==3) {
+			 		cell3.setCellValue(atss.get(i).getAtsstate().getAtsstate_name());
+				}
+			 	if (j==4) {
+			 		cell3.setCellValue(atss.get(i).getEmp().getEmp_name());
+				}
+			}
 		}
+		
+ 		response.setContentType("application/ms-excel;charset=UTF-8");
+ 		response.setHeader("Content-Disposition", "attachment;filename="
+				.concat(String.valueOf(URLEncoder.encode("固定资产详细报表" + ".xls",
+						"UTF-8"))));
+ 		excelbook.write(response.getOutputStream());
 	}
 	
-	private static void writeExcel(HttpServletResponse response, Workbook work,
-			String filePath, String fileName) throws IOException {
-		OutputStream outputStream = new FileOutputStream(filePath);
-		try {
-			response.setContentType("application/ms-excel;charset=UTF-8");
-			response.setHeader("Content-Disposition", "attachment;filename="
-					.concat(String.valueOf(URLEncoder.encode(fileName + ".xls",
-							"UTF-8"))));
-			work.write(outputStream);
-		} catch (IOException e) {
-			System.out.println("输出流错误");
-			e.printStackTrace();
-		} finally {
-			outputStream.close();
-		}
-	}
 }

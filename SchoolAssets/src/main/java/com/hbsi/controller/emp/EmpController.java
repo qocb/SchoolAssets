@@ -65,12 +65,17 @@ public class EmpController {
 	 * @param emp_name
 	 * @return
 	 */
-	@RequestMapping(value = "/like",method = RequestMethod.GET)
+	@RequestMapping(value = "/like/{page}/{size}",method = RequestMethod.GET)
 	@ResponseBody
-	public List<Emp> queryEmpByName(String emp_name) {
+	public Map<String, Object> queryEmpByName(@PathVariable(value = "page") Integer page,@PathVariable(value = "size") Integer size,String emp_name) {
 		emp_name = "%"+emp_name+"%";
-		List<Emp> emps = empService.queryEmpByName(emp_name);
-		return emps;
+		List<Emp> emps = empService.queryEmpByName(emp_name,page,size);
+		PageInfo pageInfo = new PageInfo(emps);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("code", 200);
+		map.put("msg", "请求成功");
+		map.put("data", pageInfo);
+		return map;
 	}
 	
 	/**
